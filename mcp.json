@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "faxforagents": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "faxforagents-mcp@0.4.1"],
+      "env": {
+        "FAXFORAGENTS_API_KEY": "${FAXFORAGENTS_API_KEY}"
+      }
+    }
+  }
+}

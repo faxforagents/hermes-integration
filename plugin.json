@@ -1,0 +1,23 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "faxforagents",
+  "version": "0.1.0",
+  "description": "Prepare and quote faxes, send with approval, check delivery, request cancellation, and read the inbox.",
+  "author": {
+    "name": "faxforagents",
+    "url": "https://github.com/faxforagents"
+  },
+  "homepage": "https://faxforagents.com/",
+  "repository": "https://github.com/faxforagents/hermes-integration",
+  "license": "MIT",
+  "keywords": ["fax", "faxforagents", "mcp", "hermes"],
+  "extensions": {
+    "com.nousresearch.hermes": {
+      "servers": {
+        "faxforagents": {
+          "trust": "untrusted"
+        }
+      }
+    }
+  }
+}

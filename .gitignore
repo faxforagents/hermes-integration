@@ -1,0 +1,7 @@
+.coding-agent/tmp/
+.coding-agent/codex.err
+.coding-agent/codex.out
+__pycache__/
+.env
+.env.*
+.coding-agent/
