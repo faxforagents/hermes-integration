@@ -1,4 +1,4 @@
-# Draft for maintainer review. This entry is not in the Hermes catalog.
+# Catalog entry proposed to the Hermes optional MCP catalog.
 manifest_version: 1
 name: faxforagents
 connector_slug: faxforagents

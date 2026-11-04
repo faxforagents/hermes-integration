@@ -1,10 +1,8 @@
-# Draft only. Replace the sha value after tagging and validating the release.
-# Requested release reminder, not a Hermes schema field:
-# commit: <full sha after the release tag>
+# Catalog entry for the Hermes plugin catalog. The sha is the v0.1.0 release commit.
 name: faxforagents
 title: Fax for Agents
 repo: https://github.com/faxforagents/hermes-integration
-sha: "<full sha after the release tag>"
+sha: "af0aa44b1fe1e28a2016165818d528efd4072da4"
 version: "0.1.0"
 description: >-
   Fax preparation, quotes, approved sending, delivery status, cancellation, and inbox reading.
