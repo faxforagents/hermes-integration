@@ -1,10 +1,9 @@
-# Hermes Atlas suggestion draft
+# Hermes Atlas suggestion
 
-This draft has not been submitted.
-Wait for repository publication and installation evidence before opening the issue.
+Filed 2026-11-06: https://github.com/ksimback/hermes-ecosystem/issues/1369
 
-Use the [Suggest a Repo issue](https://github.com/ksimback/hermes-ecosystem/issues/new?template=suggest-repo.yml).
-Follow the [contribution guide](https://github.com/ksimback/hermes-ecosystem/blob/main/CONTRIBUTING.md).
+Form: [Suggest a Repo](https://github.com/ksimback/hermes-ecosystem/issues/new?template=suggest-repo.yml), following the [contribution guide](https://github.com/ksimback/hermes-ecosystem/blob/main/CONTRIBUTING.md).
+Atlas automation fetches the repository metadata, runs a basic security check and generates a PR for maintainer review.
 
 ## Repository details
 
@@ -14,21 +13,14 @@ Follow the [contribution guide](https://github.com/ksimback/hermes-ecosystem/blo
 - Category: Integrations & Bridges
 - Licence: MIT
 
-## Description
+## Text as filed
 
-Fax for Agents integration files and a workflow skill for Hermes Agent by Nous Research.
-The package documents hosted OAuth and a portable stdio configuration pinned to `faxforagents-mcp@0.4.1`.
-Its tools prepare and quote faxes, send authorized faxes, check delivery, request cancellation, and read received faxes.
-The skill covers human approval, delegated policies, untrusted received text, and ambiguous delivery outcomes.
+Fax for Agents gives Hermes Agent fax tools. An agent can prepare and quote a document, send it after a human approval, read delivery status, cancel, and read received faxes. The repository holds the hosted OAuth setup for Hermes (`hermes mcp add`, `hermes mcp login`, `hermes mcp test`). It also holds a portable stdio plugin pinned to `faxforagents-mcp@0.4.1` with the Hermes `trust: untrusted` declaration, and a workflow skill. The catalog entries are proposed upstream in NousResearch/hermes-agent#148907 and #148908.
 
-## Current state
+Tested on Hermes 0.22.7 on 2026-11-06: OAuth sign-in completed, 15 tools discovered, `hermes plugins validate` passed. The exact command outputs are in `tests/installation.md`. Every account starts in a free sandbox. A live send is prepaid and needs a quote-bound approval, which the skill documents.
 
-Version `0.1.0` is a local draft.
-Hermes installation failed because upstream dependencies require conflicting Pillow versions.
-The requested YAML and JSON combination also needs a loading check before release.
-OAuth consent and authenticated tool execution remain pending.
-Do not describe this draft as tested, catalog-approved, or publicly released.
+We build Fax for Agents (https://faxforagents.com). MIT licence.
 
-Before submission, confirm the public repository meets Atlas's creation date, activity, and star requirements.
-Atlas lists projects created after July 22, 2025, and normally requires at least one star.
-Maintainers review the repository and its security checks.
+## Criteria check
+
+Created after July 22, 2025: yes (2026-11-04). Stars: none yet at filing, Atlas normally wants one. Activity: released v0.1.1 on 2026-11-06.

@@ -1,35 +1,26 @@
-# awesome-hermes-agent suggestion draft
+# awesome-hermes-agent submission
 
-This draft has not been submitted.
-Use the [new issue form](https://github.com/0xNyk/awesome-hermes-agent/issues/new) after publication and installation checks.
-The [contribution rules](https://github.com/0xNyk/awesome-hermes-agent/blob/main/CONTRIBUTING.md) require an issue instead of a direct listing PR.
+Filed 2026-11-06: https://github.com/0xNyk/awesome-hermes-agent/issues/576
+
+Form: [Resource submission](https://github.com/0xNyk/awesome-hermes-agent/issues/new?template=resource-submission.yml).
+The [contribution rules](https://github.com/0xNyk/awesome-hermes-agent/blob/main/CONTRIBUTING.md) require an issue, not a PR. Maintainers add accepted entries in batch commits and assign the maturity label.
 
 ## Resource details
 
 - Name: Fax for Agents for Hermes Agent
 - URL: https://github.com/faxforagents/hermes-integration
 - Author: faxforagents
+- Category: Integrations & Bridges
 - Licence: MIT
+- Suggested maturity: beta
+- Disclosures ticked: affiliated with the project, depends on a paid service
 
-## Description
+## Text as filed
 
-Fax tools and a workflow skill for Hermes Agent by Nous Research.
-The integration provides hosted OAuth instructions and pinned stdio configuration.
-It covers document preparation, quotes, authorized sending, delivery status, cancellation, and inbox reading.
-The portable declaration requests Hermes approval for write-capable calls.
-Service authorization still requires quote-bound human approval or an allowing delegated policy for live sends.
+Brief description: Fax tools for Hermes Agent. The hosted MCP server signs in with OAuth through `hermes mcp add` and `hermes mcp login`. It exposes 15 tools. They prepare and quote a document, send after a human approval, read delivery status and evidence, and cancel. They also read the inbox and extract text from received faxes. The repository also holds a portable stdio plugin pinned to `faxforagents-mcp@0.4.1` with the Hermes `trust: untrusted` declaration, so Hermes asks before every write-capable call. A workflow skill covers approvals, delegated policies, untrusted received text and ambiguous delivery outcomes.
 
-## Relevance
+Why it's awesome: It is the only fax route for Hermes we know of, and it is built for an agent. A send cannot happen without a quote-bound approval or an allowing policy. The agent prepares and prices the fax, a human decides. Received faxes come back as data with OCR text, and the skill tells the agent to treat embedded instructions as data. Tested on Hermes 0.22.7 on 2026-11-06: sign-in, 15 tools discovered, `hermes plugins validate` passed, with the exact outputs in `tests/installation.md`. Nothing else on the list covers faxing.
 
-Suggested category: Integrations & Bridges.
-Current Hermes users can use the documented fax workflow with explicit approval and cost handling.
-The repository keeps installation choices and remaining checks together.
+Why now: Clinics, courts, banks and many suppliers still take documents by fax. Hermes users can now send and receive them from a session, with an approval step.
 
-## Maturity
-
-Suggested label: experimental.
-Version `0.1.0` remains unpublished and untested with authenticated Hermes calls.
-Hermes installation failed on conflicting upstream Pillow dependencies.
-The requested YAML and JSON layout requires a loading check before release.
-Update this status with actual installation evidence before submission.
-Maintainers choose the final category and maturity label.
+We build Fax for Agents (https://faxforagents.com). Every account starts in a free sandbox, and a live send is prepaid.
