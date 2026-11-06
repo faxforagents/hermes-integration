@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.1 (2026-11-06)
+
+Hosted OAuth now uses the sign-in URL `https://mcp.faxforagents.com/mcp/?auth=required`.
+The plain URL answers anonymous `initialize` with 200, so Hermes 0.22.7 skipped the sign-in and `hermes mcp login` ended without a token.
+The strict URL answers 401 with the OAuth metadata pointer and Hermes runs the browser sign-in.
+Recorded the real Hermes 0.22.7 outputs in `tests/installation.md`: `hermes plugins validate` passed, sign-in completed, `hermes mcp test` found 15 tools.
+Documented the Hermes 0.22.7 login stall (NousResearch/hermes-agent#149771) and its workaround.
+Replaced the Pillow conflict note: the official installer provisions its own environment and works, a pip build does not.
+
 ## 0.1.0 (2026-11-04)
 
 Prepared the Hermes package with hosted OAuth and portable stdio configuration.

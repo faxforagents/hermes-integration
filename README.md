@@ -25,26 +25,45 @@ Fax for Agents provides fax tools for [Hermes Agent](https://github.com/NousRese
 Fax for Agents is made by JSB Holdings LLC.
 This package contains a workflow skill, portable MCP configuration, and hosted OAuth catalog drafts.
 
-Version `0.1.0` is an unpublished draft.
-Nothing has been submitted to a catalog.
-OAuth consent and authenticated installation remain untested.
-Hermes CLI installation failed because upstream dependencies require conflicting Pillow versions.
+Version `0.1.1` is released.
+The catalog entries are proposed upstream in [NousResearch/hermes-agent#148907](https://github.com/NousResearch/hermes-agent/pull/148907) (plugin catalog) and [#148908](https://github.com/NousResearch/hermes-agent/pull/148908) (hosted MCP catalog).
+On Hermes `0.22.7` the hosted OAuth sign-in completed, `hermes mcp test` found 15 tools, and `hermes plugins validate` passed.
+The exact commands and outputs are in [tests/installation.md](tests/installation.md).
 Portable discovery and loader registration pass eight isolated tests against unmodified Hermes `v0.22.7` source.
-See the [build record](.coding-agent/summary.md) and [installation checklist](tests/installation.md).
 
 ## Hosted OAuth
 
 Run these commands with your installed Hermes CLI.
-Keep the endpoint's trailing slash.
+Use the sign-in URL exactly as written, with the trailing slash and `?auth=required`.
 
 ```bash
-hermes mcp add faxforagents --url https://mcp.faxforagents.com/mcp/ --auth oauth
+hermes mcp add faxforagents --url 'https://mcp.faxforagents.com/mcp/?auth=required' --auth oauth
 hermes mcp login faxforagents
 hermes mcp test faxforagents
 ```
 
-Complete browser consent with your own Fax for Agents account.
+### Sign-in
+
+The sign-in URL answers an unauthenticated request with `401` and the OAuth metadata pointer, so Hermes runs the browser sign-in.
+The plain URL `https://mcp.faxforagents.com/mcp/` answers anonymous `initialize` with `200`.
+Hermes 0.22.7 then connects without a token and `hermes mcp login` ends with "no OAuth token was obtained".
+Hermes opens `api.faxforagents.com/oauth/authorize` with its hosted client ID metadata document, PKCE S256 and the loopback redirect on port 27890.
+Sign in with your own Fax for Agents account and approve the scopes.
+
+The first probe of `hermes mcp add` counts your browser sign-in against `connect_timeout`, 30 seconds by default ([NousResearch/hermes-agent#49759](https://github.com/NousResearch/hermes-agent/issues/49759)).
+Pass `--connect-timeout 300` to give yourself time.
+Or let the probe time out, answer `Y` to save the server, finish with `hermes mcp login faxforagents`, and change `enabled: false` to `enabled: true` under `mcp_servers.faxforagents` in `~/.hermes/config.yaml`.
+The second path is the one recorded in [tests/installation.md](tests/installation.md).
 Restart your Hermes session after authentication.
+
+### Hermes 0.22.7 login stall
+
+Hermes 0.22.7 can hang after the browser delivers the authorization code.
+The browser shows "Authorization Successful", then Hermes prints `Authentication failed: MCP call timed out after 325.0s`.
+An idle second browser socket parks Hermes's callback listener, so the token exchange waits until the browser closes that socket.
+This is a Hermes bug, reported with a fix in [NousResearch/hermes-agent#149771](https://github.com/NousResearch/hermes-agent/issues/149771).
+Until the fix lands, retry the login, or add `timeout = 5.0` to the `_Handler` class in `tools/mcp_oauth.py` of your Hermes install as the issue shows.
+With that line the login completed six seconds after the redirect.
 Review tool access with `hermes mcp configure faxforagents`.
 Record the connected account and environment before sending.
 Hosted OAuth does not require `FAXFORAGENTS_API_KEY`.
@@ -58,7 +77,8 @@ Follow the [Hermes MCP guide](https://hermes-agent.nousresearch.com/docs/user-gu
 ## Portable stdio
 
 The portable configuration targets Hermes `0.22.7` or later and Node.js `20` or later.
-Isolated loading passes on `v0.22.7`. Full runtime compatibility remains unverified.
+Isolated loading passes on `v0.22.7` and `hermes plugins validate` passes on a clean export.
+A live stdio connection inside the Hermes runtime has not been run yet.
 It invokes `npx -y faxforagents-mcp@0.4.1`.
 The npm version was checked on 2026-11-04.
 
@@ -72,8 +92,8 @@ export FAXFORAGENTS_API_KEY
 printf '\n'
 ```
 
-The following commands are for the planned public release.
-They cannot install this unpublished repository yet.
+The repository is public, but the plugin catalog entry waits for review.
+These commands were not run here.
 
 ```bash
 hermes plugins install faxforagents/hermes-integration --no-enable
@@ -106,7 +126,8 @@ That instruction conflicts with this release's loader and explicit portable admi
 The [isolated tests](tests/test_portable_loading.py) execute discovery, parsing, and portable loader registration against the fetched source.
 They verify the pinned server command, trust setting, credential placeholder, and skill passed to a recording context.
 They also reproduce the YAML failure and reject malformed MCP configuration and invalid trust.
-Real MCP connections, secret expansion, and skill availability inside Hermes remain unchecked.
+Real stdio MCP connections, secret expansion, and skill availability inside Hermes remain unchecked.
+The hosted OAuth connection is checked, see [tests/installation.md](tests/installation.md).
 
 ## Tools and approval
 
@@ -156,10 +177,7 @@ MCP tools are discovered from the configured server at runtime.
 - [Hermes Atlas suggestion](submissions/atlas.md)
 - [awesome-hermes-agent suggestion](submissions/awesome-hermes.md)
 
-The plugin catalog draft contains an invalid placeholder until a release commit exists.
-Hermes calls that field `sha`.
-The requested `commit` reminder is a comment, not a schema field.
-Replace `sha` with the release's full 40-character commit before submission.
+The plugin catalog draft pins the release commit in its `sha` field.
 Catalog admission requires maintainer review.
 
 ## Local validation
@@ -178,18 +196,18 @@ uv pip install --python .coding-agent/tmp/portable-venv/bin/python pyyaml==6.0.3
 PYTHONDONTWRITEBYTECODE=1 .coding-agent/tmp/portable-venv/bin/python -m pytest -v -p no:cacheprovider --basetemp=.coding-agent/tmp/pytest-portable tests/test_portable_loading.py
 ```
 
-All eight tests passed. The [fix record](.coding-agent/summary-fix.md) links the source findings and exact output.
-The full Hermes install remains blocked by Pillow `13.0.0` and browser-harness `0.1.13` requiring Pillow `12.3.0`.
+All eight tests passed.
+A pip build of Hermes 0.22.7 fails on a Pillow pin conflict with browser-harness, and Hermes refuses it by design.
+The official installer provisions its own environment and works.
 
-Run this from the package's parent directory after installing Hermes successfully.
+Run this from the package's parent directory after installing Hermes.
 
 ```bash
 hermes plugins validate ./hermes-integration --install-deps
 ```
 
-The command has not run for this draft.
-Keep its exact output with the release evidence.
-Complete [tests/installation.md](tests/installation.md) before claiming either installation path works.
+On 2026-11-04 against a clean git export on Hermes 0.22.7 it answered "Validation passed", security scan safe, server trust untrusted.
+The output is in [tests/installation.md](tests/installation.md).
 
 ## Sources and licence
 
