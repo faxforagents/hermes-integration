@@ -7,6 +7,8 @@ They do not establish a Hermes installation, an MCP connection, consent, a tool 
 The manual checks below record what was run on a real Hermes 0.22.7 install.
 Unchecked items were not run.
 Authorization codes are masked in the outputs. Nothing else is edited apart from removed terminal colour codes.
+The outputs were recorded on 2026-11-06, when the hosted server listed 15 tools. It lists 17 since 2026-11-12.
+The two added tools are `request_card_payment` and `get_card_payment_status`. They were not run through Hermes.
 
 ## Environment
 
@@ -234,7 +236,7 @@ Script started on 2026-11-06 02:35:41+02:00 [COMMAND="hermes mcp list" <not exec
 Script done on 2026-11-06 02:35:42+02:00 [COMMAND_EXIT_CODE="0"]
 ```
 
-- [x] All 15 discovered names match the 15 tools in `skills/fax-for-agents/SKILL.md`.
+- [x] All 15 discovered names matched the 15 tools in `skills/fax-for-agents/SKILL.md` on 2026-11-06. The skill lists 17 since 2026-11-12.
 - [x] `get_fax_document` appears. The obsolete document name does not.
 - [ ] `get_guide`, `get_fax_capabilities`, `get_fax_balance`, `list_faxes`, `list_inbox`, `get_fax_status`, `read_inbound_fax` through Hermes: not called yet.
 - [ ] Missing scope errors: not recorded yet.

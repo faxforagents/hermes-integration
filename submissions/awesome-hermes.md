@@ -1,6 +1,7 @@
 # awesome-hermes-agent submission
 
 Filed 2026-11-06: https://github.com/0xNyk/awesome-hermes-agent/issues/576
+The text below is as filed. It says 15 tools, the count on that day. The server lists 17 since 2026-11-12.
 
 Form: [Resource submission](https://github.com/0xNyk/awesome-hermes-agent/issues/new?template=resource-submission.yml).
 The [contribution rules](https://github.com/0xNyk/awesome-hermes-agent/blob/main/CONTRIBUTING.md) require an issue, not a PR. Maintainers add accepted entries in batch commits and assign the maturity label.
