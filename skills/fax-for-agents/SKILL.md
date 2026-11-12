@@ -71,7 +71,7 @@ Review requests notify a person.
 A live send requires approval or an allowing policy.
 The tool table lists required credential scopes.
 
-The launch-v2 price card took effect on 2026-10-31.
+The launch-v3 price card took effect on 2026-11-12.
 Sending costs $0.039 per page, and receiving costs $0.019 per page.
 Numbers cost $2 monthly, and the Agent workspace costs $19 monthly.
 Sandbox pages cost nothing.
