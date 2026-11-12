@@ -19,7 +19,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/licence-MIT-1f6feb" alt="MIT licence"></a>
-  <a href="skills/fax-for-agents/SKILL.md"><img src="https://img.shields.io/badge/MCP-15%20tools-6b4fbb" alt="15 MCP tools"></a>
+  <a href="skills/fax-for-agents/SKILL.md"><img src="https://img.shields.io/badge/MCP-17%20tools-6b4fbb" alt="17 MCP tools"></a>
 </p>
 
 Fax for Agents provides fax tools for [Hermes Agent](https://github.com/NousResearch/hermes-agent) by Nous Research.
@@ -28,7 +28,8 @@ This package contains a workflow skill, portable MCP configuration, and hosted O
 
 Version `0.1.1` is released.
 The catalog entries are proposed upstream in [NousResearch/hermes-agent#148907](https://github.com/NousResearch/hermes-agent/pull/148907) (plugin catalog) and [#148908](https://github.com/NousResearch/hermes-agent/pull/148908) (hosted MCP catalog).
-On Hermes `0.22.7` the hosted OAuth sign-in completed, `hermes mcp test` found 15 tools, and `hermes plugins validate` passed.
+On Hermes `0.22.7` the hosted OAuth sign-in completed and `hermes plugins validate` passed.
+`hermes mcp test` found the 15 tools the server listed on 2026-11-06. The server lists 17 since 2026-11-12.
 The exact commands and outputs are in [tests/installation.md](tests/installation.md).
 Portable discovery and loader registration pass eight isolated tests against unmodified Hermes `v0.22.7` source.
 
@@ -132,7 +133,7 @@ The hosted OAuth connection is checked, see [tests/installation.md](tests/instal
 
 ## Tools and approval
 
-The server exposes 15 tools listed in the [workflow skill](skills/fax-for-agents/SKILL.md#hosted-tools).
+The server exposes 17 tools listed in the [workflow skill](skills/fax-for-agents/SKILL.md#hosted-tools).
 They prepare documents, quote destinations, send authorized faxes, check delivery, request cancellation, and read received faxes.
 Supporting tools read guidance, capabilities, balances, document previews, and review decisions.
 They also request human review and extract received document text.
