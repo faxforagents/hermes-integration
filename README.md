@@ -188,9 +188,11 @@ Catalog admission requires maintainer review.
 
 Run the isolated tests from this directory with Python 3.12 or later, `curl`, and `sha256sum` or `shasum`.
 `tests/fetch-hermes.sh` downloads nine files from the Hermes `v0.22.7` tag into `tests/.hermes-src/`, which git ignores.
-Each file must match its SHA-256 pin in the script.
+Each file must match its SHA-256 pin in [tests/hermes-pins.txt](tests/hermes-pins.txt).
 A failed download or a different pin stops the script and leaves `tests/.hermes-src/` as it was.
+The tests check the same pins before they import any Hermes file.
 Only PyYAML and pytest are installed, with pytest's dependencies, at the versions in [tests/requirements.txt](tests/requirements.txt).
+On Debian and Ubuntu, `python3 -m venv` needs the `python3-venv` package.
 
 ```bash
 python3 -m venv .venv

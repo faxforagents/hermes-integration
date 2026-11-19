@@ -1,7 +1,7 @@
 """Run unmodified Hermes v0.22.7 source without installing hermes-agent.
 
-Source lives in tests/.hermes-src. tests/fetch-hermes.sh downloads it from the tag
-and checks every file against its SHA-256 pin.
+Source lives in tests/.hermes-src. tests/fetch-hermes.sh downloads it from the tag.
+Every file must match its SHA-256 pin in tests/hermes-pins.txt before any import.
 Discovery, native parsing, portable parsing, and loader methods are real.
 No shim decides manifest.portable or translates MCP configuration.
 
@@ -11,6 +11,7 @@ Nothing here launches npx, connects MCP, resolves secrets, or grants approvals.
 """
 
 import contextvars
+import hashlib
 import importlib
 import json
 import shutil
@@ -27,6 +28,20 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "tests" / ".hermes-src"
 FIXTURES = ROOT / "tests" / "fixtures"
+PINS = ROOT / "tests" / "hermes-pins.txt"
+
+
+def check_pinned_source():
+    """Fail unless every pinned Hermes file in SOURCE is byte for byte the tagged file."""
+    for line in PINS.read_text().splitlines():
+        if not line or line.startswith("#"):
+            continue
+        digest, name, _ = line.split()
+        path = SOURCE / name
+        if not path.is_file():
+            pytest.fail(f"{path} is missing. Run sh tests/fetch-hermes.sh first.")
+        if hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+            pytest.fail(f"{path} does not match its pin. Run sh tests/fetch-hermes.sh again.")
 
 
 def unexpected(*args, **kwargs):
@@ -36,8 +51,7 @@ def unexpected(*args, **kwargs):
 @pytest.fixture
 def hermes(monkeypatch, tmp_path):
     """Install import shims and recording sinks, never a portable parser substitute."""
-    if not (SOURCE / "plugins_manifest.py").is_file():
-        pytest.fail(f"Hermes source is missing from {SOURCE}. Run sh tests/fetch-hermes.sh first.")
+    check_pinned_source()
 
     def shim(name, **attributes):
         module = ModuleType(name)
@@ -108,6 +122,8 @@ def hermes(monkeypatch, tmp_path):
     discovery = importlib.import_module("hermes_cli.plugins_discovery")
     loader = importlib.import_module("hermes_cli.plugins_loader")
     portable = importlib.import_module("hermes_cli.agent_plugins")
+    for module in (manifest, discovery, loader, portable):
+        assert Path(module.__file__).parent == SOURCE, module.__file__
 
     class Manager(loader.PluginLoaderMixin):
         def __init__(self):
