@@ -1,0 +1,19 @@
+# Unmodified Hermes Agent v0.22.7 files, fetched by tests/fetch-hermes.sh.
+# The tests check these pins before they import anything.
+#
+# The tag v0.22.7 points at commit b200f5bc60e31588ba2cb60e288029c4a54ba5fa.
+# The pins were taken from the files at the tag on 2026-11-19.
+# They match the copy fetched for the 0.1.0 tests on 2026-11-04.
+# That fetch also kept the main branch copy of plugin-catalog/README.md.
+# It was identical to the tag copy, and only the tag copy is fetched.
+#
+# SHA-256, local file name, path in NousResearch/hermes-agent at the tag.
+08731e1f0f932edda7e74af4bae4c2f16870ade04b8fc31173380544bc42baf8 plugins_discovery.py hermes_cli/plugins_discovery.py
+89b30e679247a628c7dad93c573afa9f3f22529015b26397de24f5067ff7fc06 plugins_manifest.py hermes_cli/plugins_manifest.py
+91a93ed1ad73a146d9a5f32c659ea481260fcf173f01c175f7aea6c781c07ca8 plugins_loader.py hermes_cli/plugins_loader.py
+3d2a8cfa5c2e574e8a8e11c320be7a860b4dacb06d87055ad36ae86b1ec97cef agent_plugins.py hermes_cli/agent_plugins.py
+f9bccfcfcdf37c5068590c0f7cf24304dd854fec5e2130c1faba1ad2b07518be plugin_validate.py hermes_cli/plugin_validate.py
+44b0d33c9b86535dda3b5bde20cc06b33991ec926e293979c670105ed6dc5b5b validate_plugin_catalog.py scripts/validate_plugin_catalog.py
+529a1e0e89135d0edbd1024c20655586e52a7915c6dc83bd49e7573614d7aa8f mcp_tool_config.py tools/mcp_tool_config.py
+50fb0d704de1f1a1306b55f8db3d7a6a0d97f1343865d5c227069593ec6e2f19 catalog-submission.md website/docs/developer-guide/plugins/catalog-submission.md
+5d9ab744164bfc1c48c99d0f3051e4cc9d203cebf355287727eebe7fb176a5f3 catalog-README-v0.22.7.md plugin-catalog/README.md

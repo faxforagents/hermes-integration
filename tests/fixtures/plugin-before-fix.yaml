@@ -1,0 +1,22 @@
+name: faxforagents
+version: "0.1.0"
+description: >-
+  Prepare and quote faxes, send with approval, read delivery status,
+  request cancellation, and read the inbox through Fax for Agents MCP.
+author: faxforagents
+license: MIT
+homepage: https://github.com/faxforagents/hermes-integration
+requires_hermes: ">=0.22.7"
+requires_env:
+  - name: FAXFORAGENTS_API_KEY
+    description: API key for the portable stdio connection.
+    url: https://app.faxforagents.com/
+    secret: true
+# These lists describe native Hermes registrations, not discovered MCP tools.
+provides_tools: []
+provides_hooks: []
+capabilities: []
+tags:
+  - fax
+  - faxforagents
+  - mcp
