@@ -82,8 +82,8 @@ Follow the [Hermes MCP guide](https://hermes-agent.nousresearch.com/docs/user-gu
 The portable configuration targets Hermes `0.22.7` or later and Node.js `20` or later.
 Isolated loading passes on `v0.22.7` and `hermes plugins validate` passes on a clean export.
 A live stdio connection inside the Hermes runtime has not been run yet.
-It invokes `npx -y faxforagents-mcp@0.4.1`.
-The npm version was checked on 2026-11-04.
+It invokes `npx -y faxforagents-mcp@0.5.9`.
+The npm version was checked on 2026-11-19.
 
 Create a sandbox API key in the [dashboard](https://app.faxforagents.com/).
 Set `FAXFORAGENTS_API_KEY` through your active Hermes profile's secret settings or export it before launching Hermes.
