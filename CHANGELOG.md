@@ -8,6 +8,9 @@ The outputs in `tests/installation.md` are from 2026-11-06 and still show 15.
 Pinned the stdio package to `faxforagents-mcp@0.5.9`. Its stdio server registers the same 17 tools as the hosted server.
 The stdio check in `tests/installation.md` now names 0.5.9 and has still not been run.
 
+The tests now pass on a fresh clone. `tests/fetch-hermes.sh` downloads the Hermes `v0.22.7` files they load and checks each SHA-256 pin.
+The YAML fixture moved to `tests/fixtures/`, and the version check reads `plugin.json`. CI runs the fetch and all eight tests on pull requests and on `main`.
+
 ## 0.1.1 (2026-11-06)
 
 Hosted OAuth now uses the sign-in URL `https://mcp.faxforagents.com/mcp/?auth=required`.

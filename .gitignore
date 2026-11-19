@@ -5,3 +5,8 @@ __pycache__/
 .env
 .env.*
 .coding-agent/
+
+# Hermes source fetched by tests/fetch-hermes.sh, and the local test environment
+tests/.hermes-src*/
+.venv/
+.pytest_cache/

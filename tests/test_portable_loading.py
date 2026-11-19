@@ -1,6 +1,7 @@
 """Run unmodified Hermes v0.22.7 source without installing hermes-agent.
 
-Source lives in .coding-agent/hermes-src, fetched from the tagged raw URLs.
+Source lives in tests/.hermes-src. tests/fetch-hermes.sh downloads it from the tag
+and checks every file against its SHA-256 pin.
 Discovery, native parsing, portable parsing, and loader methods are real.
 No shim decides manifest.portable or translates MCP configuration.
 
@@ -24,7 +25,8 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / ".coding-agent" / "hermes-src"
+SOURCE = ROOT / "tests" / ".hermes-src"
+FIXTURES = ROOT / "tests" / "fixtures"
 
 
 def unexpected(*args, **kwargs):
@@ -34,6 +36,8 @@ def unexpected(*args, **kwargs):
 @pytest.fixture
 def hermes(monkeypatch, tmp_path):
     """Install import shims and recording sinks, never a portable parser substitute."""
+    if not (SOURCE / "plugins_manifest.py").is_file():
+        pytest.fail(f"Hermes source is missing from {SOURCE}. Run sh tests/fetch-hermes.sh first.")
 
     def shim(name, **attributes):
         module = ModuleType(name)
@@ -147,7 +151,7 @@ def test_actual_package_discovers_and_loads_portably(hermes):
     assert not (ROOT / "__init__.py").exists()
     manifest = discover_package(hermes, ROOT)
     assert manifest.name == manifest.key == "faxforagents"
-    assert manifest.version == "0.1.0"
+    assert manifest.version == json.loads((ROOT / "plugin.json").read_text())["version"]
     assert manifest.path == str(ROOT)
     assert manifest.portable is True
     assert manifest.requires_hermes == ""  # The catalog owns the portable version floor.
@@ -187,7 +191,7 @@ def test_actual_package_discovers_and_loads_portably(hermes):
 @pytest.mark.parametrize("extra", [{}, {"entrypoint": "plugin.json"}, {"portable": True}])
 def test_yaml_precedence_and_unsupported_markers(hermes, tmp_path, extra):
     directory = copy_package(tmp_path)
-    data = yaml.safe_load((ROOT / ".coding-agent" / "plugin-before-fix.yaml").read_text())
+    data = yaml.safe_load((FIXTURES / "plugin-before-fix.yaml").read_text())
     data.update(extra)
     (directory / "plugin.yaml").write_text(yaml.safe_dump(data))
     manifest = discover_package(hermes, directory)

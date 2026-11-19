@@ -19,6 +19,7 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/faxforagents/hermes-integration/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/faxforagents/hermes-integration/ci.yml?branch=main&label=ci" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/licence-MIT-1f6feb" alt="MIT licence"></a>
   <a href="skills/fax-for-agents/SKILL.md"><img src="https://img.shields.io/badge/MCP-17%20tools-6b4fbb" alt="17 MCP tools"></a>
 </p>
@@ -185,21 +186,22 @@ Catalog admission requires maintainer review.
 
 ## Local validation
 
-Run the isolated proof from this directory with Python 3.12 or later and `uv`.
-The fetched Hermes modules are stored under `.coding-agent/hermes-src/`.
-Only PyYAML and pytest, including pytest's dependencies, are installed.
+Run the isolated tests from this directory with Python 3.12 or later, `curl`, and `sha256sum` or `shasum`.
+`tests/fetch-hermes.sh` downloads nine files from the Hermes `v0.22.7` tag into `tests/.hermes-src/`, which git ignores.
+Each file must match its SHA-256 pin in the script.
+A failed download or a different pin stops the script and leaves `tests/.hermes-src/` as it was.
+Only PyYAML and pytest are installed, with pytest's dependencies, at the versions in [tests/requirements.txt](tests/requirements.txt).
 
 ```bash
-mkdir -p .coding-agent/tmp
-export UV_CACHE_DIR="$PWD/.coding-agent/tmp/uv-cache"
-export UV_PYTHON_INSTALL_DIR="$PWD/.coding-agent/tmp/python"
-export TMPDIR="$PWD/.coding-agent/tmp"
-uv venv --python python3 .coding-agent/tmp/portable-venv
-uv pip install --python .coding-agent/tmp/portable-venv/bin/python pyyaml==6.0.3 pytest==9.2.0
-PYTHONDONTWRITEBYTECODE=1 .coding-agent/tmp/portable-venv/bin/python -m pytest -v -p no:cacheprovider --basetemp=.coding-agent/tmp/pytest-portable tests/test_portable_loading.py
+python3 -m venv .venv
+.venv/bin/python -m pip install -r tests/requirements.txt
+sh tests/fetch-hermes.sh
+.venv/bin/python -m pytest -v tests
 ```
 
-All eight tests passed.
+All eight tests pass. One of the six test functions runs with three YAML variants.
+The [CI workflow](.github/workflows/ci.yml) runs these steps on every pull request and every push to `main`.
+
 A pip build of Hermes 0.22.7 fails on a Pillow pin conflict with browser-harness, and Hermes refuses it by design.
 The official installer provisions its own environment and works.
 
