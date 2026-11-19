@@ -5,6 +5,9 @@
 The hosted server lists 17 tools since 2026-11-12. The skill lists `request_card_payment` and `get_card_payment_status`.
 The outputs in `tests/installation.md` are from 2026-11-06 and still show 15.
 
+Pinned the stdio package to `faxforagents-mcp@0.5.9`. Its stdio server registers the same 17 tools as the hosted server.
+The stdio check in `tests/installation.md` now names 0.5.9 and has still not been run.
+
 ## 0.1.1 (2026-11-06)
 
 Hosted OAuth now uses the sign-in URL `https://mcp.faxforagents.com/mcp/?auth=required`.

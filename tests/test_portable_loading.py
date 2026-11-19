@@ -161,7 +161,7 @@ def test_actual_package_discovers_and_loads_portably(hermes):
     assert list(manager._portable_mcp_servers) == ["faxforagents"]
     server = manager._portable_mcp_servers["faxforagents"]
     assert server["command"] == "npx"
-    assert server["args"] == ["-y", "faxforagents-mcp@0.4.1"]
+    assert server["args"] == ["-y", "faxforagents-mcp@0.5.9"]
     assert server["trust"] == "untrusted"
     assert server["cwd"] == str(ROOT)
     assert server["env"] == {

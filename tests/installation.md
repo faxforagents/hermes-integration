@@ -41,7 +41,7 @@ Validation passed.
 - [ ] `faxforagents:fax-for-agents` appearing through Hermes's skill tools: not run.
 - [ ] Clean profile plugin install and enable commands: not run, the catalog entry waits for review.
 - [ ] Missing `FAXFORAGENTS_API_KEY` failure: not run.
-- [ ] stdio with `faxforagents-mcp@0.4.1` and the supplied sandbox credential: not run.
+- [ ] stdio with `faxforagents-mcp@0.5.9` and the supplied sandbox credential: not run.
 
 ## Hosted OAuth sign-in
 

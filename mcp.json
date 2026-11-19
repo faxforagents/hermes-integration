@@ -4,7 +4,7 @@
     "faxforagents": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "faxforagents-mcp@0.4.1"],
+      "args": ["-y", "faxforagents-mcp@0.5.9"],
       "env": {
         "FAXFORAGENTS_API_KEY": "${FAXFORAGENTS_API_KEY}"
       }
